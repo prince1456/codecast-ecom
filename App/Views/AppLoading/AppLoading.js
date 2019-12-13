@@ -6,27 +6,24 @@ import React, { useEffect, useState } from "react";
 import Firebase from "../../Util/firebase";
 
 const Loading = ({ navigation }) => {
-  const [user, setUser] = useState(null);
-  const [view, setView] = useState(null);
   useEffect(() => {
     if (!firebase.apps.length) {
       Firebase.initialize();
     }
-    const findUser = async () => {
+   (async function(){
       try {
         firebase.auth().onAuthStateChanged(user => {
-          setUser(user);
           const view = user ? "App" : "Auth";
           navigation.navigate(view);
         });
       } catch (e) {
         console.log(e);
       }
-    };
-    findUser();
-  });
+    })();
+    return ;
+  }, []);
   const goToNextPage = () => {
-    navigation.navigate(view);
+    console.log("loaded")
   };
   const _cacheSplashResourcesAsync = async () => {
     const splash = require("../../../assets/splash.png");
@@ -34,13 +31,11 @@ const Loading = ({ navigation }) => {
   };
 
   return (
-    <View>
       <AppLoading
         startAsync={_cacheSplashResourcesAsync}
         onFinish={() => goToNextPage}
         onError={console.warn}
       />
-    </View>
   );
 };
 export default Loading;

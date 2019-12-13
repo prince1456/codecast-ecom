@@ -1,33 +1,44 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { StyleSheet, View, Image } from "react-native";
 import { Input, Item, Label, Button, Text } from "native-base";
 import { Formik } from "formik";
+import FirebaseApp from "../../Util/Auth";
 import * as Yup from "yup";
 const SignupSchema = Yup.object().shape({
-    password: Yup.string()
-    .required('No password provided.') 
-    .min(8, 'Password is too short - should be 8 chars minimum.')
-    .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
-    email: Yup.string()
-      .email('Invalid email')
-      .required('Required'),
-  });
+  password: Yup.string()
+    .required("No password provided.")
+    .min(8, "Password is too short - should be 8 chars minimum.")
+    .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
+  email: Yup.string()
+    .email("Invalid email")
+    .required("Required")
+});
 const Login = ({ navigation }) => {
-  const goTo = path => {
-    navigation.navigate(path);
+  const goTo = path => navigation.navigate(path);
+  const LoginUser = async values => {
+    try {
+      const user = await FirebaseApp.login(values);
+      
+    } catch (e) {
+      console.log(e);
+    }
   };
-  const Login = (values) => {
-    console.log(values)
-  }
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
       <Formik
         validationSchema={SignupSchema}
-        initialValues={{ email: "" , password: null }}
-        onSubmit={Login}
+        initialValues={{ email: "", password: null }}
+        onSubmit={LoginUser}
       >
-        {({ handleChange, handleBlur, handleSubmit, values, errors, touched  }) => (
+        {({
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          values,
+          errors,
+          touched
+        }) => (
           <View>
             <Item style={styles.inputWrapper} floatingLabel>
               <Label>Email</Label>
@@ -36,8 +47,12 @@ const Login = ({ navigation }) => {
                 onBlur={handleBlur("email")}
                 value={values.email}
               />
-            </Item >
-            <Item error={errors.password ? true : false} style={styles.inputWrapper} floatingLabel>
+            </Item>
+            <Item
+              error={errors.password ? true : false}
+              style={styles.inputWrapper}
+              floatingLabel
+            >
               <Label>Password</Label>
               <Input
                 secureTextEntry
@@ -48,14 +63,14 @@ const Login = ({ navigation }) => {
               />
             </Item>
             <Button onPress={handleSubmit} primary block>
-              <Text>Sign Up</Text>
+              <Text>Sign In</Text>
             </Button>
           </View>
         )}
       </Formik>
       <View style={styles.btnContainer}>
         <Text>Don't have an account?</Text>
-        <Button transparent onPress={() => goTo("Login")}>
+        <Button transparent onPress={() => goTo("SignUp")}>
           <Text style={styles.signInText}>Sign Up</Text>
         </Button>
       </View>

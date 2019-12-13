@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Image } from "react-native";
-import { Input, Item, Label, Button, Text } from "native-base";
 import { Formik } from "formik";
+import { Button, Input, Item, Label, Text } from "native-base";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 import * as Yup from "yup";
+import FirebaseApp from '../../Util/Auth';
 const SignupSchema = Yup.object().shape({
     name: Yup.string()
       .min(2, 'Too Short!')
@@ -20,8 +21,13 @@ const SignUp = ({ navigation }) => {
   const goTo = path => {
     navigation.navigate(path);
   };
-  const signUp = (values) => {
-    console.log(values)
+  const signUp = async (values) => {
+      try {
+          const user = await FirebaseApp.register(values)
+      } catch (e) {
+      console.log(e)
+      }
+    // alert(user)
   }
   return (
     <View style={styles.container}>

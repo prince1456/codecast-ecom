@@ -1,6 +1,5 @@
 import React from "react";
 import { createSwitchNavigator, createAppContainer } from "react-navigation";
-import { Button, Text } from "native-base";
 import { Login, SignUp, Home, Loading, Onboard } from "../Views";
 import { createStackNavigator } from "react-navigation-stack";
 const App = createStackNavigator({ Home: Home });
