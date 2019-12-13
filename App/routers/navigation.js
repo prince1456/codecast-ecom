@@ -2,7 +2,9 @@ import React from "react";
 import { createSwitchNavigator, createAppContainer } from "react-navigation";
 import { Login, SignUp, Home, Loading, Onboard } from "../Views";
 import { createStackNavigator } from "react-navigation-stack";
-const App = createStackNavigator({ Home: Home });
+import { createDrawerNavigator } from "react-navigation-drawer";
+
+const App = createDrawerNavigator({ Home: Home });
 
 const Auth = createStackNavigator(
   {

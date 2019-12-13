@@ -1,38 +1,47 @@
 import React, { useEffect, useRef } from "react";
-import { View, Dimensions, Image, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  Dimensions,
+  Image,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity
+} from "react-native";
 import { Input, Icon, Item, Text, Container } from "native-base";
 import FirebaseApp from "../../Util/Auth";
 import Carousel from "react-native-snap-carousel";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { categorySlide, cardSlide } from "../../Components";
 
-const categories = [{
+const categories = [
+  {
     title: ``,
     text: false,
-    imgUrl: require('../../../assets/Group-3.png')
+    imgUrl: require("../../../assets/Group-3.png")
   },
   {
     title: ``,
     text: false,
-    imgUrl: require('../../../assets/Group-2.png')
+    imgUrl: require("../../../assets/Group-2.png")
   },
   {
     title: `Women`,
     text: true,
-    imgUrl: require('../../../assets/Group-1.png')
-  }]
-
+    imgUrl: require("../../../assets/Group-1.png")
+  }
+];
 
 const data = Array(10)
   .fill(0)
   .map((item, i) => ({
     title: `Women T-Shirt ${i}`,
     price: 10,
-    imgUrl: "https://cdn5.vectorstock.com/i/1000x1000/86/34/abstract-dark-mobile-phone-backgrounds-with-flower-vector-9228634.jpg"
+    imgUrl:
+      "https://cdn5.vectorstock.com/i/1000x1000/86/34/abstract-dark-mobile-phone-backgrounds-with-flower-vector-9228634.jpg"
   }));
 
 var { height, width } = Dimensions.get("window");
-const Home = () => {
+const Home = ({ navigation }) => {
   const slider = useRef(null);
   useEffect(() => {
     // FirebaseApp.logout()
@@ -44,8 +53,28 @@ const Home = () => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Ionicons style={styles.icon} name="ios-menu" size={32} color="black" />
-        <AntDesign style={styles.icon} name="filter" size={32} color="black" />
+        <TouchableOpacity
+          style={{ alignItems: "flex-end", margin: 16 }}
+          onPress={navigation.openDrawer}
+        >
+          <Ionicons
+            style={styles.icon}
+            name="ios-menu"
+            size={32}
+            color="black"
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ alignItems: "flex-end", margin: 16 }}
+          onPress={navigation.openDrawer}
+        >
+          <AntDesign
+            style={styles.icon}
+            name="filter"
+            size={32}
+            color="black"
+          />
+        </TouchableOpacity>
       </View>
       <View style={{ marginTop: 25, paddingLeft: 30, paddingRight: 30 }}>
         <Item>
@@ -105,7 +134,7 @@ Home.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingLeft: 25,
+    paddingLeft: 25
   },
   header: {
     paddingRight: 20,
