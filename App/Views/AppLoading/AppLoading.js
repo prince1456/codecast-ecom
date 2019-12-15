@@ -1,8 +1,7 @@
 import { AppLoading } from "expo";
 import { Asset } from "expo-asset";
-import { View } from "react-native";
 import * as firebase from "firebase";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Firebase from "../../Util/firebase";
 
 const Loading = ({ navigation }) => {

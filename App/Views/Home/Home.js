@@ -50,6 +50,9 @@ const Home = ({ navigation }) => {
   const search = ({ nativeEvent }) => {
     console.log(nativeEvent.text);
   };
+  const goTo = (path, title) => {
+      navigation.navigate(path, { title })
+  }
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -99,7 +102,9 @@ const Home = ({ navigation }) => {
       <View>
         <View style={styles.textWrapper}>
           <Text style={styles.title}>Featured</Text>
-          <Text style={styles.link}>See all</Text>
+          <TouchableOpacity onPress={() => goTo('FeatureList', "Featured")}>
+            <Text style={styles.link}>See all</Text>
+          </TouchableOpacity>
         </View>
         <Carousel
           ref={slider}

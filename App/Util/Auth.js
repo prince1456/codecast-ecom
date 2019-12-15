@@ -19,8 +19,9 @@ class FirebaseApp {
     this.db = app.firestore();
   }
   register = async ({ email, password, name }) => {
-    await this.auth.createUserWithEmailAndPassword(email, password);
-    await this.db.collection('Users').doc(uid).set({name: name})
+    const { user } = await this.auth.createUserWithEmailAndPassword(email, password);
+    console.log(user.uid)
+    await this.db.collection('Users').doc(user.uid).set({name: name})
     return this.auth.currentUser.updateProfile({
       displayName: name
     });
@@ -33,10 +34,31 @@ class FirebaseApp {
   logout = () => {
     this.auth.signOut();
   };
-  saveUserInfo = (values) => {
+  saveUserInfo = async (values) => {
       const uid = this.auth.currentUser.uid
-      this.db.collection('Users').doc(uid).set(values)
+      console.log(uid)
+      await this.db.collection('Users').doc(uid).set(values)
+  }
+  getFirstName = async () => {
+    const uid = this.auth.currentUser.uid
+      const doc = await this.db.collection('Users').doc(uid).get()
+      return doc.data()
   }
 }
 
 export default new FirebaseApp();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

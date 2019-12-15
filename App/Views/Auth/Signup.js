@@ -23,7 +23,8 @@ const SignUp = ({ navigation }) => {
   };
   const signUp = async (values) => {
       try {
-          const user = await FirebaseApp.register(values)
+          await FirebaseApp.register(values)
+          await FirebaseApp.saveUserInfo(values)
       } catch (e) {
       console.log(e)
       }
